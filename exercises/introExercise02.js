@@ -8,11 +8,13 @@ import {initRenderer,
         onWindowResize,
         createGroundPlaneXZ} from "../libs/util/util.js";
 
-let scene, renderer, camera, material, light, orbit;; // Initial variables
+let scene, renderer, camera, material, materialSphere, materialCylinder, light, orbit;; // Initial variables
 scene = new THREE.Scene();    // Create main scene
 renderer = initRenderer();    // Init a basic renderer
 camera = initCamera(new THREE.Vector3(0, 15, 30)); // Init camera in this position
 material = setDefaultMaterial(); // create a basic material
+materialSphere = setDefaultMaterial('lightgreen');
+materialCylinder = setDefaultMaterial('lightblue');
 light = initDefaultBasicLight(scene); // Create a basic light to illuminate the scene
 orbit = new OrbitControls( camera, renderer.domElement ); // Enable mouse rotation, pan, zoom etc.
 
@@ -27,25 +29,27 @@ scene.add( axesHelper );
 let plane = createGroundPlaneXZ(20, 20)
 scene.add(plane);
 
-// create cubes
+// create a cube
 let cubeGeometry = new THREE.BoxGeometry(4, 4, 4);
-let cubeGeometry2 = new THREE.BoxGeometry(2, 2, 2);
-let cubeGeometry3 = new THREE.BoxGeometry(1, 1, 1);
 let cube = new THREE.Mesh(cubeGeometry, material);
-let cube2 = new THREE.Mesh(cubeGeometry2, material);
-let cube3 = new THREE.Mesh(cubeGeometry3, material);
+
+// create sphere and cylinder
+let sphereGeometry = new THREE.SphereGeometry(2.5, 32, 16);
+let sphere = new THREE.Mesh(sphereGeometry, materialSphere);
+let cylinderGeometry = new THREE.CylinderGeometry(2.0, 2.0, 4.0, 16);
+let cylinder = new THREE.Mesh(cylinderGeometry, materialCylinder);
 
 
 
 // position the cube
 cube.position.set(0.0, 2.0, 0.0);
-cube2.position.set(5.0, 2.0, 0.0);
-cube3.position.set(0.0, 2.0, 5.0);
+sphere.position.set(-7.5, 2.5, 0.0);
+cylinder.position.set(7.5, 2.0, 0.0);
 
 // add the cube to the scene
 scene.add(cube);
-scene.add(cube2);
-scene.add(cube3);
+scene.add(sphere);
+scene.add(cylinder);
 
 // Use this to show information onscreen
 let controls = new InfoBox();
