@@ -86,6 +86,8 @@ function rotateCylinder()
     var mat4 = new THREE.Matrix4();
     cylinder.matrix.identity();  // reset matrix
     cylinder2.matrix.identity();  // reset
+    cylinder3.matrix.identity();  // reset
+    cylinder4.matrix.identity();  // reset
 
     // Will execute T1 and then R1
     cylinder.matrix.multiply(mat4.makeRotationZ(angle)); // R1
